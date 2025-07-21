@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bunga untukmu 🌸</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('gambar/Gambar WhatsApp 2025-07-21 pukul 22.05.00_91692ae3.jpg') no-repeat center center;
+      background-size: cover;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #fdfdfd;
+      max-width: 90%;
+      margin: 10px 20px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    .flower {
+      position: absolute;
+      font-size: 2rem;
+      pointer-events: none;
+      will-change: transform;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .back-button {
+      margin-top: 30px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .back-button:hover {
+      background-color: #c2185b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Musik otomatis -->
+  <audio id="bg-music" autoplay loop>
+    <source src="audio/Tulus - Manusia Kuat  Lirik Lagu Indonesia.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung audio.
+  </audio>
+
+  <h1>💐 Bunga ini untukmu</h1>
+  <p>
+    Mungkin aku datang di akhir bab perjuanganmu, tapi izinkan aku menjadi awal dari
+    bab kebahagiaanmu. Karena sejak aku mengenalmu, tak ada satu hari pun di mana
+    aku tidak kagum pada keteguhan hatimu. Dunia kini menyapamu sebagai bidan
+    dan aku, sebagai seseorang yang jatuh cinta pada kekuatan dan keindahanmu.
+  </p>
+  <p>
+    Setiap bunga yang jatuh hari ini seperti membawa kenangan tentang perjuanganmu
+    malam-malam panjang yang kamu lewati, tangis diam-diam yang tak pernah
+    terlihat, dan semangatmu yang tak pernah padam. Kini semua itu terbayar; kamu
+    berdiri sebagai seorang bidan yang bukan hanya hebat secara ilmu, tapi juga luar biasa dalam hati.
+  </p>
+  <p>
+    Dan aku... hanya seseorang yang beruntung bisa menyaksikanmu tumbuh sejauh ini. Dunia boleh memanggilmu "bidan", 
+    tapi bagiku, kamu adalah sosok paling menginspirasi — lembut, kuat, dan selalu membuatku jatuh cinta, berkali-kali,
+    dengan versi terbaik dari dirimu sendiri
+  </p>
+
+  <button class="back-button" onclick="window.location.href='index.html'">← Kembali ke Halaman Utama</button>
+
+  <script>
+    const flowerEmojis = ['🌸','🌺','🌻','🌼','💐','🥀'];
+    const maxFlowers = 30;
+    const flowers = [];
+
+    function randomBetween(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createFlower() {
+      const flower = document.createElement('span');
+      flower.className = 'flower';
+      flower.innerText = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+      flower.style.left = randomBetween(0, window.innerWidth - 30) + 'px';
+      flower.style.top = randomBetween(-100, -40) + 'px';
+      flower.dataset.speed = randomBetween(1, 2.5);
+      flower.dataset.x = parseFloat(flower.style.left);
+      flower.dataset.swing = randomBetween(20, 70);
+      flower.dataset.swingSpeed = randomBetween(0.008, 0.02);
+      flower.dataset.t = randomBetween(0, 100);
+      document.body.appendChild(flower);
+      flowers.push(flower);
+    }
+
+    function animateFlowers() {
+      for (let i = 0; i < flowers.length; i++) {
+        let flower = flowers[i];
+        let top = parseFloat(flower.style.top);
+        let t = parseFloat(flower.dataset.t);
+        let swing = parseFloat(flower.dataset.swing);
+        let swingSpeed = parseFloat(flower.dataset.swingSpeed);
+        top += parseFloat(flower.dataset.speed);
+        t += swingSpeed;
+        let offsetX = Math.sin(t) * swing;
+        flower.style.top = top + 'px';
+        flower.style.transform = `translateX(${offsetX}px)`;
+        flower.dataset.t = t;
+        if (top > window.innerHeight) {
+          flower.style.top = randomBetween(-100, -40) + 'px';
+          flower.style.left = randomBetween(0, window.innerWidth - 30) + 'px';
+          flower.dataset.x = parseFloat(flower.style.left);
+          flower.dataset.speed = randomBetween(1, 2.5);
+          flower.dataset.swing = randomBetween(20, 70);
+          flower.dataset.swingSpeed = randomBetween(0.008, 0.02);
+          flower.dataset.t = randomBetween(0, 100);
+        }
+      }
+      requestAnimationFrame(animateFlowers);
+    }
+
+    for (let i = 0; i < maxFlowers; i++) {
+      createFlower();
+    }
+    animateFlowers();
+  </script>
+</body>
+</html>
